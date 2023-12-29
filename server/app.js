@@ -31,6 +31,10 @@ app.use("/api/v1", user);
 app.use("/api/v1", payment);
 app.use("/api/v1", other);
 
+app.use("/", (req, res) => {
+  return res.send("server is working");
+});
+
 export default app;
 
 app.use(ErrorMiddleware);
