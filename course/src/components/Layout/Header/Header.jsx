@@ -42,6 +42,7 @@ const Header = () => {
         colorScheme={"yellow"}
         width="12"
         height={"12"}
+        zIndex={"overlay"}
         rounded="full"
         top={"6"}
         left={"6"}
