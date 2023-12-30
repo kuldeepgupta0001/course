@@ -1,7 +1,7 @@
-import { configuration } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { userReducer } from "./reducers/userReducer";
 
-const store = configuration({
+const store = configureStore({
   reducer: {
     user: userReducer,
   },
@@ -9,4 +9,4 @@ const store = configuration({
 
 export default store;
 
-export const server = "Backend_Server_Link_Here";
+export const server = "https://course-sable.vercel.app/api/v1";

@@ -22,3 +22,39 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: "loginFail", payload: error.response.data.message });
   }
 };
+
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: "loadUserRequest" });
+
+    const { data } = await axios.get(`${server}/me`, {
+      withCredentials: true,
+    });
+    console.log(data);
+
+    dispatch({ type: "loadUserSuccess", payload: data.user });
+  } catch (error) {
+    dispatch({ type: "loadUserFail", payload: error.response.data.message });
+  }
+};
+
+const serial_key = "kuldeep";
+export const logout = () => async (dispatch) => {
+  try {
+    dispatch({ type: "logoutRequest" });
+
+    const { data } = await axios.post(
+      `${server}/logout`,
+      {
+        serial_key,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({ type: "logoutSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({ type: "logoutFail", payload: error.response.data.message });
+  }
+};
