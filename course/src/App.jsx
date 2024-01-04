@@ -93,7 +93,14 @@ function App() {
 
             <Route path="/courses" element={<Courses />} />
 
-            <Route path="/course/:id" element={<CourseDetail />} />
+            <Route
+              path="/course/:id"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <CourseDetail user={user} />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/contact" element={<Contact />} />
 
@@ -179,7 +186,7 @@ function App() {
               path="/subscribe"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <Subscribe />
+                  <Subscribe user={user} />
                 </ProtectedRoute>
               }
             />

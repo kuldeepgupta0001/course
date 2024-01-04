@@ -19,19 +19,27 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 import { fileUploadCss } from "../Auth/Register/Register";
-import { useState } from "react";
-import { updateProfilePicture } from "../../redux/actions/profile";
+import {
+  removeFromPlaylist,
+  updateProfilePicture,
+} from "../../redux/actions/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "../../redux/actions/user";
 import toast from "react-hot-toast";
+import { cancelSubscription } from "../../redux/actions/subscription";
 
 const Profile = ({ user }) => {
   const dispatch = useDispatch();
 
   const { loading, message, error } = useSelector((state) => state.profile);
+  const {
+    loading: subscriptionLoading,
+    message: subscriptionMessage,
+    error: subscriptionError,
+  } = useSelector((state) => state.subscription);
 
   const changeImageSubmitHandler = async (e, image) => {
     e.preventDefault();
@@ -41,8 +49,13 @@ const Profile = ({ user }) => {
     dispatch(loadUser());
   };
 
-  const removeFromPlaylistHandler = (id) => {
-    console.log(id);
+  const removeFromPlaylistHandler = async (courseId) => {
+    await dispatch(removeFromPlaylist(courseId));
+    dispatch(loadUser());
+  };
+
+  const cancelSubscriptionHandler = () => {
+    dispatch(cancelSubscription());
   };
 
   useEffect(() => {
@@ -55,16 +68,16 @@ const Profile = ({ user }) => {
       dispatch({ type: "clearMessage" });
       dispatch(loadUser());
     }
-    //  if (subscriptionError) {
-    //    toast.error(subscriptionError);
-    //    dispatch({ type: "clearError" });
-    //  }
-    //  if (subscriptionMessage) {
-    //    toast.success(subscriptionMessage);
-    //    dispatch({ type: "clearMessage" });
-    //    dispatch(loadUser());
-    //  }
-  }, [dispatch, error, message]);
+    if (subscriptionError) {
+      toast.error(subscriptionError);
+      dispatch({ type: "clearError" });
+    }
+    if (subscriptionMessage) {
+      toast.success(subscriptionMessage);
+      dispatch({ type: "clearMessage" });
+      dispatch(loadUser());
+    }
+  }, [dispatch, error, message, subscriptionError, subscriptionMessage]);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -103,8 +116,8 @@ const Profile = ({ user }) => {
               <Text children="Subscription" fontWeight={"bold"} />
               {user.subscription && user.subscription.status === "active" ? (
                 <Button
-                  // isLoading={subscriptionLoading}
-                  // onClick={cancelSubscriptionHandler}
+                  isLoading={subscriptionLoading}
+                  onClick={cancelSubscriptionHandler}
                   color={"yellow.500"}
                   variant="unstyled"
                 >
@@ -153,7 +166,7 @@ const Profile = ({ user }) => {
                 </Link>
 
                 <Button
-                  // isLoading={loading}
+                  isLoading={loading}
                   onClick={() => removeFromPlaylistHandler(element.course)}
                 >
                   <RiDeleteBin7Fill />
