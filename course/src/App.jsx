@@ -90,9 +90,7 @@ function App() {
           <Header isAuthenticated={isAuthenticated} user={user} />
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route path="/courses" element={<Courses />} />
-
             <Route
               path="/course/:id"
               element={
@@ -101,11 +99,8 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route path="/contact" element={<Contact />} />
-
             <Route path="/about" element={<About />} />
-
             <Route
               path="/login"
               element={
@@ -125,7 +120,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/updateprofile"
               element={
@@ -134,7 +128,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/changepassword"
               element={
@@ -143,7 +136,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/register"
               element={
@@ -155,7 +147,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/forgetpassword"
               element={
@@ -167,7 +158,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/resetpassword/:token"
               element={
@@ -179,9 +169,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route path="/request" element={<Request />} />
-
             <Route
               path="/subscribe"
               element={
@@ -190,13 +178,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route path="*" element={<NotFound />} />
-
             <Route path="/paymentsuccess" element={<PaymentSuccess />} />
 
-            <Route path="/paymentfail" element={<PaymentFail />} />
-
+            <Route path="/paymentfailed" element={<PaymentFail />} />
             {/* Admin Routes */}
             <Route
               path="/admin/dashboard"
@@ -234,7 +219,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
             <Route
               path="/admin/courses"
               element={

@@ -4,6 +4,9 @@ import { profileReducer } from "./reducers/profileReducer";
 import { courseReducer } from "./reducers/courseReducer";
 import { adminReducer } from "./reducers/adminReducer";
 import { otherReducer } from "./reducers/otherReducer";
+
+export const server = import.meta.env.VITE_SERVER_URI;
+
 const store = configureStore({
   reducer: {
     user: userReducer,
@@ -16,5 +19,3 @@ const store = configureStore({
 });
 
 export default store;
-
-export const server = "https://course-sable.vercel.app/api/v1";
