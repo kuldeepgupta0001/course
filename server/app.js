@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import ErrorMiddleware from "./middlewares/Error.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import RazorPay from "razorpay";
 
 config({
   path: "./config/config.env",
@@ -28,6 +29,11 @@ app.use(
 );
 
 app.use(cookieParser());
+
+export const instance = new RazorPay({
+  key_id: process.env.RAZORPAY_API_KEY,
+  key_secret: process.env.RAZORPAY_API_SECRET,
+});
 
 //importing & using Routes
 import course from "./routes/courseRoutes.js";
